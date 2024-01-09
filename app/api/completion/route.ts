@@ -8,6 +8,7 @@ const config = new Configuration({
 const openai = new OpenAIApi(config);
  
 // Set the runtime to edge for best performance
+console.log("API KEY",process.env.OPENAI_API_KEY)
 export const runtime = 'edge';
  
 export async function POST(req: Request) {
