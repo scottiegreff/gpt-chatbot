@@ -8,20 +8,19 @@ const config = new Configuration({
 const openai = new OpenAIApi(config);
 
 // Set the runtime to edge for best performance
-console.log("API KEY", process.env.OPENAI_API_KEY);
 export const runtime = "edge";
 
 export async function POST(req: Request) {
-  // Set CORS headers
-  const headers = new Headers();
-  headers.set("Access-Control-Allow-Origin", "*"); // Allows requests from any origin
-  headers.set("Access-Control-Allow-Methods", "POST, OPTIONS"); // Specifies the allowed methods
-  headers.set("Access-Control-Allow-Headers", "Content-Type"); // Specifies the allowed headers
+  // // Set CORS headers
+  // const headers = new Headers();
+  // headers.set("Access-Control-Allow-Origin", "*"); // Allows requests from any origin
+  // headers.set("Access-Control-Allow-Methods", "POST, OPTIONS"); // Specifies the allowed methods
+  // headers.set("Access-Control-Allow-Headers", "Content-Type"); // Specifies the allowed headers
 
-  // Handle preflight request for CORS
-  if (req.method === "OPTIONS") {
-    return new Response(null, { status: 204, headers }); // 204 No Content
-  }
+  // // Handle preflight request for CORS
+  // if (req.method === "OPTIONS") {
+  //   return new Response(null, { status: 204, headers }); // 204 No Content
+  // }
   const { prompt } = await req.json();
 
   // Ask OpenAI for a streaming completion given the prompt
@@ -36,5 +35,5 @@ export async function POST(req: Request) {
   const stream = OpenAIStream(response);
   // Respond with the stream
   // Respond with the stream and include the CORS headers
-  return new StreamingTextResponse(stream, { headers });
+  return new StreamingTextResponse(stream);
 }
